@@ -27,19 +27,21 @@ const App = () => {
             let iconName;
 
             if (route.name === 'Automation') {
-              iconName = "memory";
-            } else if (route.name === 'OpenClose') {
               iconName = "developer-board";
+            } else if (route.name === 'OpenClose') {
+              iconName = "foundation";
             }
             return <Icon name={iconName} size={size} color={color} />;
           },
-          tabBarActiveTintColor: '#54B435',
+          tabBarActiveTintColor: '#35ab48',
           tabBarInactiveTintColor: 'gray',
         })}>
         <Tab.Screen name="Automation" component={Automation} options={{
+          headerTitleAlign: 'center',
           title: "Kontrolcü Otomasyonu",
         }} />
         <Tab.Screen name="OpenClose" component={OpenClose} options={{
+          headerTitleAlign: 'center',
           title: "Kontrolcüler"
         }} />
       </Tab.Navigator>

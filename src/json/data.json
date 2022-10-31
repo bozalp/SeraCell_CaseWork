@@ -1,0 +1,17 @@
+[
+    {
+        "id":0,
+        "label":"Frezye serası",
+        "value":"frezye"
+    },
+    {
+        "id":1,
+        "label":"Lisyantus serası",
+        "value":"lisyantus"
+    },
+    {
+        "id":2,
+        "label":"Biçme serası",
+        "value":"biçme"
+    }
+]
