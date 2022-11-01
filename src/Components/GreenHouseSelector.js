@@ -11,6 +11,12 @@ const GreenHouseSelector = () => {
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
     const [items, setItems] = useState(data);
+
+    function getSelectedGreenHouse()
+    {
+        return value;
+    }
+    
     return (
         <View style={styles.container}>
             <Icon name={'foundation'} size={28} color={'#7f8282'} style={styles.header_text} />
@@ -24,6 +30,7 @@ const GreenHouseSelector = () => {
                     setValue={setValue}
                     setItems={setItems}
                     onSelectItem={setValue}
+                    placeholder="Seranızı seçin"
                 />
             </View>
         </View>

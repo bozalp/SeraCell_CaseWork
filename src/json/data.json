@@ -1,17 +1,59 @@
 [
     {
-        "id":0,
-        "label":"Frezye serası",
-        "value":"frezye"
+        "id": 0,
+        "label": "Frezye serası",
+        "value": "frezye",
+        "controllers": [
+            {
+                "id": 0,
+                "name": "kontrolcüm 1",
+                "notification": true,
+                "isActive": false
+            },
+            {
+                "id": 1,
+                "name": "kontrolcüm 2",
+                "notification": true,
+                "isActive": true
+            }
+        ]
     },
     {
-        "id":1,
-        "label":"Lisyantus serası",
-        "value":"lisyantus"
+        "id": 1,
+        "label": "Lisyantus serası",
+        "value": "lisyantus",
+        "controllers": [
+            {
+                "id": 0,
+                "name": "kontrolcüm 4",
+                "notification": true,
+                "isActive": false
+            }
+        ]
     },
     {
-        "id":2,
-        "label":"Biçme serası",
-        "value":"biçme"
+        "id": 2,
+        "label": "Biçme serası",
+        "value": "biçme",
+        "controllers": [
+            {
+                "id": 0,
+                "name": "kontrolcüm 6",
+                "notification": true,
+                "isActive": false
+            },
+            {
+                "id": 1,
+                "name": "kontrolcüm 10",
+                "notification": true,
+                "isActive": true
+            },
+            {
+                "id": 2,
+                "name": "kontrolcüm 15",
+                "notification": false,
+                "isActive": true
+            }
+        ]
     }
 ]
