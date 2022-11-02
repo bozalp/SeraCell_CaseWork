@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, FlatList, Alert } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, FlatList, Alert, TextInput } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 import GreenHouseSelector from '../../Components/GreenHouseSelector';
@@ -7,6 +7,7 @@ import MyController from '../../Components/MyController';
 
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import data from '../../json/data.json';
+import controllerTypes from '../../json/controllerTypes.json';
 
 const Automation = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -21,7 +22,7 @@ const Automation = () => {
         if (item.value === selectedValue)
             return (
                 item.controllers.map((item) =>
-                    <MyController title={item.name} notification={item.notification} isActive={item.isActive} whichValue={item.id.toString()} />
+                    <MyController key={item.id} title={item.name} notification={item.notification} isActive={item.isActive} whichValue={item.id.toString()} />
                 )
             )
     }
@@ -31,7 +32,7 @@ const Automation = () => {
     return (
         <View style={{ flex: 1 }}>
             <View style={styles.container_dropdown}>
-                <Icon name={'foundation'} size={28} color={'#7f8282'} style={styles.header_text} />
+                <Icon name={'foundation'} size={28} color={'#7f8282'} style={styles.header_icon} />
                 <View style={styles.dropdown_area}>
                     <DropDownPicker
                         style={styles.dropdown}
@@ -49,11 +50,8 @@ const Automation = () => {
             </View>
             {
                 isOpen ?
-                    <View style={styles.controller_add_area}>
-                        <Text>
-                            ekle
-                        </Text>
-                    </View> :
+                    <ControllerAddArea />
+                    :
                     <View />
             }
             <View style={styles.container}>
@@ -73,6 +71,87 @@ const Automation = () => {
                     }
                 </TouchableOpacity>
             }
+        </View>
+    )
+}
+
+const ControllerAddArea = () => {
+    const [controllerText, setControllerText] = useState(null);
+    const [conditionText, setConditionText] = useState(null);
+    const [selectedValue, setSelectedValue] = useState(null);
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState(null);
+    const [items, setItems] = useState([
+        {
+            label: "Aç",
+            value: "Aç"
+        }
+        ,
+        {
+            label: "Kapat",
+            value: "Kapat"
+        }
+    ]);
+
+    function clearText() {
+        setConditionText(null);
+    }
+    function selectAction(value) {
+        setSelectedValue(value);
+    }
+    return (
+        <View style={styles.controller_add_area}>
+            <View style={{ flex: 1, alignItems: 'center', padding: 5 }}>
+                <Text>
+                    Kontrolcü
+                </Text>
+                <TextInput
+                    style={styles.textbox}
+                    onChangeText={setControllerText}
+                    value={controllerText}
+                />
+            </View>
+            <View style={{ flex: 1, alignItems: 'center', padding: 5 }}>
+                <Text>
+                    Şartlar
+                </Text>
+                <TextInput
+                    style={styles.textbox_conditions}
+                    onChangeText={setConditionText}
+                    value={conditionText}
+                    multiline
+                    numberOfLines={4}
+                />
+                <TouchableOpacity activeOpacity={0.7} style={styles.clear_button} onPress={clearText}>
+                    <Icon name={"delete"} size={28} color={"#fff"} />
+                    <Text style={{ color: '#fff' }}>
+                        Temizle
+                    </Text>
+                </TouchableOpacity>
+            </View>
+            <View style={{ flex: 1.2, alignItems: 'center', padding: 5 }}>
+                <Text>
+                    Aksiyon
+                </Text>
+                <DropDownPicker
+                    style={styles.dropdown_action}
+                    open={open}
+                    items={items}
+                    setOpen={setOpen}
+                    setValue={setValue}
+                    value={value}
+                    setItems={setItems}
+                    onChangeValue={() => selectAction(value)}
+                    placeholder="Aksiyon"
+                />
+            </View>
+            <View style={{ flex: 0.7, alignItems: 'center', padding: 5 }}>
+                <TouchableOpacity activeOpacity={0.7} style={styles.add_button}>
+                    <Text style={{ color: '#fff' }}>
+                        Ekle
+                    </Text>
+                </TouchableOpacity>
+            </View>
         </View>
     )
 }
@@ -107,8 +186,11 @@ const styles = StyleSheet.create(
         controller_add_area:
         {
             width: '100%',
-            height: 150,
-            backgroundColor: '#f0f0f0'
+            height: 172,
+            backgroundColor: '#f0f0f0',
+            flexDirection: 'row',
+            padding: 5,
+            justifyContent: 'space-between',
         },
         container_dropdown:
         {
@@ -117,7 +199,7 @@ const styles = StyleSheet.create(
             height: 64,
             width: '100%',
             paddingBottom: 10,
-            zIndex: 1,
+            zIndex: 10,
         },
         dropdown_area:
         {
@@ -128,12 +210,55 @@ const styles = StyleSheet.create(
             borderWidth: 0,
             backgroundColor: '#f0f0f0',
         },
-        header_text:
+        dropdown_action:
+        {
+            borderWidth: 0,
+            backgroundColor: '#f0f0f0',
+            zIndex: 5,
+        },
+        header_icon:
         {
             flex: 1,
             textAlignVertical: 'center',
             justifyContent: 'center',
             textAlign: 'center',
+        },
+        textbox:
+        {
+            width: '100%',
+            height: 36,
+            borderWidth: 1,
+            borderRadius: 10
+        },
+        textbox_conditions:
+        {
+            width: '100%',
+            height: 64,
+            borderWidth: 1,
+            borderRadius: 10
+        },
+        clear_button:
+        {
+            flexDirection: 'row',
+            alignItems: 'center',
+            borderRadius: 10,
+            marginTop: 5,
+            padding: 5,
+            backgroundColor: '#e9767a',
+            borderColor: '#f00',
+            borderWidth: 1,
+        },
+        add_button:
+        {
+            width: '90%',
+            borderRadius: 10,
+            padding: 10,
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: 18,
+            backgroundColor: '#74d784',
+            borderColor: '#35ab48',
+            borderWidth: 1,
         }
     }
 )

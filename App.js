@@ -16,7 +16,7 @@ import OpenClose from './src/Pages/Controller/OpenClose';
 
 const Tab = createBottomTabNavigator();
 
-import Icon from 'react-native-vector-icons/dist/MaterialIcons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const App = () => {
   return (

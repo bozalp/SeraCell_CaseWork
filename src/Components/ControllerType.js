@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, StyleSheet, Text, Alert } from "react-native";
 import { Switch } from 'react-native-switch';
 
-import Icon from 'react-native-vector-icons/dist/MaterialIcons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const ControllerType = ({ title, isOpen, iconName }) => {
     const [isEnabled, setIsEnabled] = useState(isOpen);
@@ -15,7 +15,7 @@ const ControllerType = ({ title, isOpen, iconName }) => {
             </Text>
             <View style={styles.switch_area}>
                 {iconName &&
-                    <Icon name={iconName} size={54} color={'#000'} />
+                    <Icon name={iconName} size={48} color={'#000'} />
                 }
                 <Switch
                     onValueChange={toggleSwitch}

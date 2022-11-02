@@ -1,0 +1,97 @@
+[
+    {
+        "id": 0,
+        "type": "fan",
+        "icon": "home",
+        "greenhouses": [
+            {
+                "value": "frezye",
+                "isActive": false
+            },
+            {
+                "value": "lisyantus",
+                "isActive": false
+            },
+            {
+                "value": "biçme",
+                "isActive": false
+            }
+        ]
+    },
+    {
+        "id": 1,
+        "type": "door",
+        "icon": "sensor-door",
+        "greenhouses": [
+            {
+                "value": "frezye",
+                "isActive": false
+            },
+            {
+                "value": "lisyantus",
+                "isActive": false
+            },
+            {
+                "value": "biçme",
+                "isActive": true
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "type": "light",
+        "icon": "wb-sunny",
+        "greenhouses": [
+            {
+                "value": "frezye",
+                "isActive": false
+            },
+            {
+                "value": "lisyantus",
+                "isActive": true
+            },
+            {
+                "value": "biçme",
+                "isActive": true
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "type": "valve",
+        "icon": "tune",
+        "greenhouses": [
+            {
+                "value": "frezye",
+                "isActive": true
+            },
+            {
+                "value": "lisyantus",
+                "isActive": false
+            },
+            {
+                "value": "biçme",
+                "isActive": false
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "type": "fog",
+        "icon": "cloud",
+        "greenhouses": [
+            {
+                "value": "frezye",
+                "isActive": true
+            },
+            {
+                "value": "lisyantus",
+                "isActive": false
+            },
+            {
+                "value": "biçme",
+                "isActive": true
+            }
+        ]
+    }
+]

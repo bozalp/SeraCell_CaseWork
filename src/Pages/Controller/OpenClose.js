@@ -1,23 +1,62 @@
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, FlatList } from 'react-native';
+import { Text, View, StyleSheet, FlatList, Alert } from 'react-native';
+import DropDownPicker from 'react-native-dropdown-picker';
 
-import GreenHouseSelector from '../../Components/GreenHouseSelector';
 import ControllerType from '../../Components/ControllerType';
 
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
+
 import data from '../../json/data.json';
+import controllerTypes from '../../json/controllerTypes.json';
 
 const OpenClose = () => {
+    const [isOpen, setIsOpen] = useState(false);
+    const [selectedValue, setSelectedValue] = useState(null);
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState(null);
+    const [items, setItems] = useState(data);
 
-    const renderItems = (item) => <ControllerType title={item.label} iconName={"sensor-door"} />
+    const renderItems = (item) =>
+    //contollertypes.json dan gelen verilerde greenhouse value ile seçilen seranın verisi aynı mı kontrolünü yapıp ekrana bastırdım
+        item.greenhouses.map((items) => 
+        {
+            if(items.value === selectedValue)
+                return(
+                    <ControllerType key={items.id} title={item.type}
+                iconName={item.icon} isOpen={items.isActive}/>
+                )
+        }
+            )
+
+
+
+    const selectGreenHouse = (selectedItem) => {
+        setSelectedValue(selectedItem);
+    }
 
     return (
         <View>
-            <GreenHouseSelector />
+            <View style={styles.container_dropdown}>
+                <Icon name={'foundation'} size={28} color={'#7f8282'} style={styles.header_icon} />
+                <View style={styles.dropdown_area}>
+                    <DropDownPicker
+                        style={styles.dropdown}
+                        open={open}
+                        items={items}
+                        setOpen={setOpen}
+                        setValue={setValue}
+                        value={value}
+                        setItems={setItems}
+                        //onSelectItem={() => selectGreenHouse(value)}
+                        onChangeValue={() => selectGreenHouse(value)}
+                        placeholder="Seranızı seçin"
+                    />
+                </View>
+            </View>
             <View style={styles.container}>
                 <FlatList
                     numColumns={2}
-                    data={data}
+                    data={controllerTypes}
                     renderItem={({ item }) => renderItems(item)
                     }
                 />
@@ -36,6 +75,31 @@ const styles = StyleSheet.create(
             alignItems: 'center',
             height: '100%'
         },
+        container_dropdown:
+        {
+            backgroundColor: '#f0f0f0',
+            flexDirection: 'row',
+            height: 64,
+            width: '100%',
+            paddingBottom: 10,
+            zIndex: 1,
+        },
+        dropdown_area:
+        {
+            flex: 6,
+        },
+        dropdown:
+        {
+            borderWidth: 0,
+            backgroundColor: '#f0f0f0',
+        },
+        header_icon:
+        {
+            flex: 1,
+            textAlignVertical: 'center',
+            justifyContent: 'center',
+            textAlign: 'center',
+        }
     }
 )
 
