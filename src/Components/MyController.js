@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 
 import MyCheckbox from './Checkbox/MyCheckbox';
 
-const MyController = ({ title, notification, isActive, whichValue }) => {
+const MyController = ({ title, condition, notification, isActive, whichValue }) => {
     const [notificate, setNotification] = useState(notification);
     const [isActivate, setActivate] = useState(isActive);
 
@@ -27,7 +27,7 @@ const MyController = ({ title, notification, isActive, whichValue }) => {
                 </Text>
                 <View>
                     <Text>
-                        {"rüzgar > 18"}
+                        {condition}
                     </Text>
                 </View>
                 <View style={styles.checkbox_area}>
@@ -111,8 +111,8 @@ const styles = StyleSheet.create(
             height: 28,
             borderRadius: 12,
             backgroundColor: 'red',
-            justifyContent:'center',
-            alignItems:'center'
+            justifyContent: 'center',
+            alignItems: 'center'
         }
     }
 )

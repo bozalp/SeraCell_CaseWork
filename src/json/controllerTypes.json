@@ -2,7 +2,8 @@
     {
         "id": 0,
         "type": "fan",
-        "icon": "home",
+        "label": "Fan",
+        "value": "fan",
         "greenhouses": [
             {
                 "value": "frezye",
@@ -16,12 +17,14 @@
                 "value": "biçme",
                 "isActive": false
             }
-        ]
+        ],
+        "icons": "home"
     },
     {
         "id": 1,
         "type": "door",
-        "icon": "sensor-door",
+        "label": "Kapı",
+        "value": "door",
         "greenhouses": [
             {
                 "value": "frezye",
@@ -35,12 +38,14 @@
                 "value": "biçme",
                 "isActive": true
             }
-        ]
+        ],
+        "icons": "sensor-door"
     },
     {
         "id": 2,
         "type": "light",
-        "icon": "wb-sunny",
+        "label": "Işık",
+        "value": "light",
         "greenhouses": [
             {
                 "value": "frezye",
@@ -54,12 +59,14 @@
                 "value": "biçme",
                 "isActive": true
             }
-        ]
+        ],
+        "icons": "wb-sunny"
     },
     {
         "id": 3,
         "type": "valve",
-        "icon": "tune",
+        "label": "Vana",
+        "value": "valve",
         "greenhouses": [
             {
                 "value": "frezye",
@@ -73,12 +80,14 @@
                 "value": "biçme",
                 "isActive": false
             }
-        ]
+        ],
+        "icons": "tune"
     },
     {
         "id": 4,
         "type": "fog",
-        "icon": "cloud",
+        "label": "Sis",
+        "value": "fog",
         "greenhouses": [
             {
                 "value": "frezye",
@@ -92,6 +101,7 @@
                 "value": "biçme",
                 "isActive": true
             }
-        ]
+        ],
+        "icons": "cloud"
     }
 ]

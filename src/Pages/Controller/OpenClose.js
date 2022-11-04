@@ -22,8 +22,8 @@ const OpenClose = () => {
         {
             if(items.value === selectedValue)
                 return(
-                    <ControllerType key={items.id} title={item.type}
-                iconName={item.icon} isOpen={items.isActive}/>
+                    <ControllerType key={items.id} title={item.label}
+                iconName={item.icons} isOpen={items.isActive}/>
                 )
         }
             )

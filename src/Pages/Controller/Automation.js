@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, FlatList, Alert, TextInput } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Text, View, StyleSheet, TouchableOpacity, FlatList, Alert, TextInput, Modal } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 
-import GreenHouseSelector from '../../Components/GreenHouseSelector';
 import MyController from '../../Components/MyController';
 
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
@@ -22,13 +21,14 @@ const Automation = () => {
         if (item.value === selectedValue)
             return (
                 item.controllers.map((item) =>
-                    <MyController key={item.id} title={item.name} notification={item.notification} isActive={item.isActive} whichValue={item.id.toString()} />
+                    <MyController key={item.id} title={item.name} condition={item.condition} notification={item.notification} isActive={item.isActive} whichValue={item.id.toString()} />
                 )
             )
     }
     const selectGreenHouse = (selectedItem) => {
         setSelectedValue(selectedItem);
     }
+
     return (
         <View style={{ flex: 1 }}>
             <View style={styles.container_dropdown}>
@@ -50,7 +50,7 @@ const Automation = () => {
             </View>
             {
                 isOpen ?
-                    <ControllerAddArea />
+                    <ControllerAddArea selectedGreenHouse={selectedValue} />
                     :
                     <View />
             }
@@ -75,7 +75,7 @@ const Automation = () => {
     )
 }
 
-const ControllerAddArea = () => {
+const ControllerAddArea = ({ selectedGreenHouse }) => {
     const [controllerText, setControllerText] = useState(null);
     const [conditionText, setConditionText] = useState(null);
     const [selectedValue, setSelectedValue] = useState(null);
@@ -92,15 +92,90 @@ const ControllerAddArea = () => {
             value: "Kapat"
         }
     ]);
+    const [controllertypes, setControllertypes] = useState(controllerTypes);
+    const [selectedController, setSelectedController] = useState(null);
+    const [openController, setOpenController] = useState(false);
+    const [valueController, setValueController] = useState(null);
+    const [min, setMin] = useState("");
+    const [max, setMax] = useState("");
+
+    const [isModalVisible, setModalVisible] = useState(false);
+
+    const toggleModal = () => {
+        setModalVisible(!isModalVisible);
+    };
+
+    const selectController = (value) => {
+        setSelectedController(value);
+    };
 
     function clearText() {
-        setConditionText(null);
+        setSelectedController(null);
+        setMax("");
+        setMin("");
     }
     function selectAction(value) {
         setSelectedValue(value);
     }
+
+    function addController() {
+        const targetArray = data.find((item) => item.value === selectedGreenHouse);
+        targetArray.controllers.push({
+            id: Math.floor(Math.random() * 1000),
+            name: controllerText,
+            condition: min + " < " + selectedController + " < " + max,
+            notification: false,
+            isActive: selectedValue
+        });
+    }
+
     return (
+
         <View style={styles.controller_add_area}>
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={isModalVisible}
+            >
+                <View style={styles.add_modal}>
+                    <TouchableOpacity style={styles.close_modal_button} activeOpacity={0.7} onPress={toggleModal}>
+                        <Icon name='close' size={30} color="#fff" />
+                    </TouchableOpacity>
+                    <View style={{ flexDirection: 'row', width: '100%', flex: 1, padding: 10, justifyContent: 'space-around' }}>
+                        <TextInput
+                            style={{ width: 64, height: 36, borderWidth: 1, margin: 5, borderRadius: 10 }}
+                            onChangeText={setMin}
+                            value={min}
+                        />
+                        <View style={{ width: 80 }}>
+                            <DropDownPicker
+                                style={styles.dropdown_controller}
+                                open={openController}
+                                items={controllertypes}
+                                setOpen={setOpenController}
+                                setValue={setValueController}
+                                value={valueController}
+                                onSelectItem={(item) => {
+                                    selectController(item.label)
+                                }}
+                                setItems={setControllertypes}
+                                //onChangeValue={() => selectController(valueController)}
+                                placeholder="Seç"
+                            />
+                        </View>
+                        <TextInput
+                            style={{ width: 64, height: 36, borderWidth: 1, margin: 5, borderRadius: 10 }}
+                            onChangeText={setMax}
+                            value={max}
+                        />
+                    </View>
+                    <TouchableOpacity activeOpacity={0.7} style={styles.add_button} onPress={toggleModal}>
+                        <Text style={{ color: '#fff' }}>
+                            Ekle
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+            </Modal>
             <View style={{ flex: 1, alignItems: 'center', padding: 5 }}>
                 <Text>
                     Kontrolcü
@@ -115,13 +190,12 @@ const ControllerAddArea = () => {
                 <Text>
                     Şartlar
                 </Text>
-                <TextInput
-                    style={styles.textbox_conditions}
-                    onChangeText={setConditionText}
-                    value={conditionText}
-                    multiline
-                    numberOfLines={4}
-                />
+                <TouchableOpacity activeOpacity={0.7} onPress={toggleModal}
+                    style={{ height: 36, marginTop: 10, borderRadius: 10, borderWidth: 1, width: '100%', justifyContent: 'center', alignItems: 'center', padding: 5 }}>
+                    <Text>
+                        {selectedController ? (min + "<" + selectedController + "<" + max) : "Seç"}
+                    </Text>
+                </TouchableOpacity>
                 <TouchableOpacity activeOpacity={0.7} style={styles.clear_button} onPress={clearText}>
                     <Icon name={"delete"} size={28} color={"#fff"} />
                     <Text style={{ color: '#fff' }}>
@@ -145,13 +219,14 @@ const ControllerAddArea = () => {
                     placeholder="Aksiyon"
                 />
             </View>
-            <View style={{ flex: 0.7, alignItems: 'center', padding: 5 }}>
-                <TouchableOpacity activeOpacity={0.7} style={styles.add_button}>
+            <View style={{ flex: 0.7, alignItems: 'center', padding: 5, marginTop: 10 }}>
+                <TouchableOpacity activeOpacity={0.7} style={styles.add_button} onPress={addController}>
                     <Text style={{ color: '#fff' }}>
                         Ekle
                     </Text>
                 </TouchableOpacity>
             </View>
+
         </View>
     )
 }
@@ -216,6 +291,12 @@ const styles = StyleSheet.create(
             backgroundColor: '#f0f0f0',
             zIndex: 5,
         },
+        dropdown_controller:
+        {
+            borderWidth: 0,
+            backgroundColor: '#f0f0f0',
+            width: '100%',
+        },
         header_icon:
         {
             flex: 1,
@@ -228,7 +309,8 @@ const styles = StyleSheet.create(
             width: '100%',
             height: 36,
             borderWidth: 1,
-            borderRadius: 10
+            borderRadius: 10,
+            marginTop: 10
         },
         textbox_conditions:
         {
@@ -259,6 +341,37 @@ const styles = StyleSheet.create(
             backgroundColor: '#74d784',
             borderColor: '#35ab48',
             borderWidth: 1,
+        },
+        add_modal:
+        {
+            width: '80%',
+            height: 128,
+            backgroundColor: '#fff',
+            alignSelf: 'center',
+            alignItems: 'center',
+            borderRadius: 10,
+            padding: 10,
+            marginTop: 100,
+            shadowColor: "#000",
+            shadowOffset: {
+                width: 0,
+                height: 4,
+            },
+            shadowOpacity: 0.32,
+            shadowRadius: 5.46,
+            elevation: 9,
+        },
+        close_modal_button:
+        {
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            backgroundColor: 'red',
+            width: 36,
+            height: 36,
+            borderRadius: 10,
+            alignItems: 'center',
+            justifyContent: 'center'
         }
     }
 )

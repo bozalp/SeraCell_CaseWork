@@ -7,14 +7,9 @@
             {
                 "id": 0,
                 "name": "kontrolcüm 1",
+                "condition": "5 < Rüzgar < 10",
                 "notification": true,
                 "isActive": false
-            },
-            {
-                "id": 1,
-                "name": "kontrolcüm 2",
-                "notification": true,
-                "isActive": true
             }
         ]
     },
@@ -26,6 +21,7 @@
             {
                 "id": 0,
                 "name": "kontrolcüm 4",
+                "condition": "20 < Işık < 25",
                 "notification": true,
                 "isActive": false
             }
@@ -39,18 +35,21 @@
             {
                 "id": 0,
                 "name": "kontrolcüm 6",
+                "condition": " 16 < Vana < 23",
                 "notification": true,
                 "isActive": false
             },
             {
                 "id": 1,
                 "name": "kontrolcüm 10",
+                "condition": "10 < Sis",
                 "notification": true,
                 "isActive": true
             },
             {
                 "id": 2,
                 "name": "kontrolcüm 15",
+                "condition": "14 < Fan 24",
                 "notification": false,
                 "isActive": true
             }
